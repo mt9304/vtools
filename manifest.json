@@ -1,0 +1,22 @@
+{
+  "manifest_version" : 2,
+  "name" : "vtools",
+  "description" : "Various tools to make certain processes easier. ",
+  "version" : "0.1",
+  "content_scripts" : [
+    {
+      "matches" : [ "http://*/*", "https://*/*", "file:///*/*"],
+      "css" : ["content.css"]
+    }
+  ],
+  "permissions": ["tabs", "background", "http://*/*", "https://*/*", "file:///*/*"],
+  "background":
+  {
+    "scripts" : ["background.js"]
+  },
+  "browser_action" :
+  {
+    "default_icon" : "icon.png"
+  },
+  "web_accessible_resources": ["content.css"]
+}
