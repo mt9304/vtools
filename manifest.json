@@ -9,7 +9,7 @@
       "css" : ["content.css"]
     }
   ],
-  "permissions": ["tabs", "background", "http://*/*", "https://*/*", "file:///*/*"],
+  "permissions": ["tabs", "webNavigation", "background", "http://*/*", "https://*/*", "file:///*/*"],
   "background":
   {
     "scripts" : ["background.js"]

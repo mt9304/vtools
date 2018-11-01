@@ -1,7 +1,16 @@
-checkIfLoadedAlready();
-addClassToAccountLink();
-actionWhenHoveringClass("ta-hover-load", insertTableInWindow);
-populateTableWithRecentTickets();
+chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
+    if (msg.text === 'are_you_there_accountHoverAddon_script?') {
+      sendResponse({status: "yes"});
+    }
+});
+
+	checkIfLoadedAlready();
+	addClassToAccountLink();
+	actionWhenHoveringClass("ta-hover-load", insertTableInWindow);
+	populateTableWithRecentTickets();
+
+
+
 
 function checkIfLoadedAlready() {
 
