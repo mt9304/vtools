@@ -1,15 +1,7 @@
-chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
-    if (msg.text === 'are_you_there_accountHoverAddon_script?') {
-      sendResponse({status: "yes"});
-    }
-});
-
-	checkIfLoadedAlready();
-	addClassToAccountLink();
-	actionWhenHoveringClass("ta-hover-load", insertTableInWindow);
-	populateTableWithRecentTickets();
-
-
+checkIfLoadedAlready();
+addClassToAccountLink();
+actionWhenHoveringClass("ta-hover-load", insertTableInPopup);
+populateTableWithRecentTickets();
 
 
 function checkIfLoadedAlready() {
@@ -26,10 +18,24 @@ function actionWhenHoveringClass(className, action) {
 	element.addEventListener("mouseover", action);
 }
 
-function insertTableInWindow() {
+function insertTableInPopup() {
 	console.log("Hovered");
 	var element = document.getElementsByClassName("accountBlock topLeft")[0];
 	console.log(element);
+
+}
+
+function popupIsLoaded() {
+	var element = document.getElementsByClassName("labelCol last");
+	var textIndicator = "Parent Account";
+	var popupLoaded = false;
+	for (var i = 0; i < element.length; i++) {
+		if (element[i].textContent == textIndicator) {
+			popupLoaded = true; 
+			break;
+		}
+	}
+	return popupLoaded;
 }
 
 function populateTableWithRecentTickets() {
