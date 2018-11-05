@@ -1,16 +1,6 @@
 //checkIfLoadedAlready();
 addClassToAccountLink();
 actionWhenHoveringClass(insertTableInPopup, "ta-hover-load");
-populateTableWithRecentTickets();
-
-
-function checkIfLoadedAlready() {
-	console.log("Checking if loaded. ");
-}
-
-function tableLoadedAlready() {
-	return false;
-}
 
 function addClassToAccountLink() {
     var element = document.getElementById("cas4_ileinner");
@@ -24,18 +14,36 @@ function actionWhenHoveringClass(action, className) {
 
 function insertTableInPopup() {
 	console.log("Hovered");
-	var element = document.getElementsByClassName("accountBlock topLeft")[0];
-	console.log(popupIsLoaded());
-	waitUntilPopupIsLoaded();
-	checkIfLoadedAlready();
+	insertTableAfterPopupLoads();
 }
 
-function waitUntilPopupIsLoaded() {
+function insertTableAfterPopupLoads() {
 	if(!popupIsLoaded()) {
-       window.setTimeout(waitUntilPopupIsLoaded, 200);
-    } else {
-      console.log("Popup loaded. ");
+    	window.setTimeout(insertTableAfterPopupLoads, 200);
+    } 
+    if (popupIsLoaded()) {
+    	insertTable();
     }
+
+}
+
+function insertTable() {
+	//Used to check if already loaded the table. 
+	var tempClass = document.getElementsByClassName("bPageBlock brandSecondaryBrd bDetailBlock secondaryPalette")[0];
+
+	if (!tempClass.classList.contains("ta-table-appended")) {
+		tempClass.className += " ta-table-appended";
+		var referenceNode = document.getElementsByClassName("accountBlock topLeft")[0];
+		var lastOriginalTable = referenceNode.getElementsByClassName("pbBody")[0].getElementsByClassName("detailList")[0];
+
+		var div = document.createElement("table");
+		div.style.width = "100px";
+		div.style.height = "100px";
+		div.style.color = "black";
+		div.innerHTML = "Hello"
+
+		lastOriginalTable.parentNode.insertBefore(div, lastOriginalTable.nextSibling);
+	}
 }
 
 function popupIsLoaded() {
@@ -49,8 +57,4 @@ function popupIsLoaded() {
 		}
 	}
 	return popupLoaded;
-}
-
-function populateTableWithRecentTickets() {
-
 }
