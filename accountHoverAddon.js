@@ -1,7 +1,9 @@
 //checkIfLoadedAlready();
 addClassToAccountLink();
-actionWhenHoveringClass(insertTableInPopup, "ta-hover-load");
+actionWhenHoveringClass(insertTableAfterPopupLoads, "ta-hover-load");
+console.log(currentAccountLink());
 
+/** START: Setting Up And Checking Page **/
 function addClassToAccountLink() {
     var element = document.getElementById("cas4_ileinner");
     element.classList.add("ta-hover-load");
@@ -12,11 +14,6 @@ function actionWhenHoveringClass(action, className) {
 	element.addEventListener("mouseover", action);
 }
 
-function insertTableInPopup() {
-	console.log("Hovered");
-	insertTableAfterPopupLoads();
-}
-
 function insertTableAfterPopupLoads() {
 	if(!popupIsLoaded()) {
     	window.setTimeout(insertTableAfterPopupLoads, 200);
@@ -24,22 +21,6 @@ function insertTableAfterPopupLoads() {
     if (popupIsLoaded()) {
     	insertTable();
     }
-
-}
-
-function insertTable() {
-	//Used to check if already loaded the table. 
-	var tempClass = document.getElementsByClassName("bPageBlock brandSecondaryBrd bDetailBlock secondaryPalette")[0];
-
-	if (!tempClass.classList.contains("ta-table-appended")) {
-		tempClass.className += " ta-table-appended";
-		var referenceNode = document.getElementsByClassName("accountBlock topLeft")[0];
-		var lastOriginalTable = referenceNode.getElementsByClassName("pbBody")[0].getElementsByClassName("detailList")[0];
-
-		var customTable = customTableElement();
-
-		lastOriginalTable.parentNode.insertBefore(customTable, lastOriginalTable.nextSibling);
-	}
 }
 
 function popupIsLoaded() {
@@ -105,3 +86,28 @@ function customTableElement() {
 
 		return custTable;
 }
+
+function insertTable() {
+	//Used to check if already loaded the table. 
+	var tempClass = document.getElementsByClassName("bPageBlock brandSecondaryBrd bDetailBlock secondaryPalette")[0];
+
+	if (!tempClass.classList.contains("ta-table-appended")) {
+		tempClass.className += " ta-table-appended";
+		var referenceNode = document.getElementsByClassName("accountBlock topLeft")[0];
+		var lastOriginalTable = referenceNode.getElementsByClassName("pbBody")[0].getElementsByClassName("detailList")[0];
+
+		var customTable = customTableElement();
+		lastOriginalTable.parentNode.insertBefore(customTable, lastOriginalTable.nextSibling);
+
+		
+	}
+}
+/** END: Setting Up And Checking Page  **/
+
+/** START: Getting Links And Data With AJAX **/
+
+function currentAccountLink() {
+	return document.getElementById("cas4_ileinner").getElementsByTagName("a")[0].href;
+}
+
+/** END: Getting Links And Data With AJAX  **/
