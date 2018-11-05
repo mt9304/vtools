@@ -36,13 +36,9 @@ function insertTable() {
 		var referenceNode = document.getElementsByClassName("accountBlock topLeft")[0];
 		var lastOriginalTable = referenceNode.getElementsByClassName("pbBody")[0].getElementsByClassName("detailList")[0];
 
-		var div = document.createElement("table");
-		div.style.width = "100px";
-		div.style.height = "100px";
-		div.style.color = "black";
-		div.innerHTML = "Hello"
+		var customTable = customTableElement();
 
-		lastOriginalTable.parentNode.insertBefore(div, lastOriginalTable.nextSibling);
+		lastOriginalTable.parentNode.insertBefore(customTable, lastOriginalTable.nextSibling);
 	}
 }
 
@@ -57,4 +53,55 @@ function popupIsLoaded() {
 		}
 	}
 	return popupLoaded;
+}
+
+function customTableElement() {
+		var custTable = document.createElement("table");
+	 		custTable.className += " list";
+
+		var custTableBody = document.createElement("tbody");
+
+		var custHeaderRow = document.createElement("tr");
+	 		custHeaderRow.className += " headerRow";
+
+		var custTableHeader1 = document.createElement("th");
+		 	custTableHeader1.className += " zen-deemphasize";
+		 	custTableHeader1.textContent = "Support Ticket";
+
+ 		var custTableHeader2 = document.createElement("th");
+		 	custTableHeader2.className += " zen-deemphasize";
+		 	custTableHeader2.textContent = "Contact Name";
+
+		var custTableHeader3 = document.createElement("th");
+		 	custTableHeader3.className += " zen-deemphasize";
+		 	custTableHeader3.textContent = "Subject";
+
+		var custTableHeader4 = document.createElement("th");
+		 	custTableHeader4.className += " zen-deemphasize";
+		 	custTableHeader4.textContent = "Status";
+
+		var custTableHeader5 = document.createElement("th");
+		 	custTableHeader5.className += " zen-deemphasize";
+		 	custTableHeader5.textContent = "Owner";
+
+		var custBodyRow = document.createElement("tr");
+	 		custBodyRow.className += " dataRow";
+		var custBodyCell = document.createElement("td");
+	 		custBodyCell.className += " dataCell";
+
+		custBodyRow.appendChild(custBodyCell);
+
+		//Insert td elements for cell.
+
+		custHeaderRow.appendChild(custTableHeader1);
+		custHeaderRow.appendChild(custTableHeader2);
+		custHeaderRow.appendChild(custTableHeader3);
+		custHeaderRow.appendChild(custTableHeader4);
+		custHeaderRow.appendChild(custTableHeader5);
+
+		custTableBody.appendChild(custHeaderRow);
+		custTableBody.appendChild(custBodyRow);
+		custTable.appendChild(custTableBody);
+
+		return custTable;
 }
