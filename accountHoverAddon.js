@@ -1,11 +1,15 @@
-checkIfLoadedAlready();
+//checkIfLoadedAlready();
 addClassToAccountLink();
-actionWhenHoveringClass("ta-hover-load", insertTableInPopup);
+actionWhenHoveringClass(insertTableInPopup, "ta-hover-load");
 populateTableWithRecentTickets();
 
 
 function checkIfLoadedAlready() {
+	console.log("Checking if loaded. ");
+}
 
+function tableLoadedAlready() {
+	return false;
 }
 
 function addClassToAccountLink() {
@@ -13,7 +17,7 @@ function addClassToAccountLink() {
     element.classList.add("ta-hover-load");
 }
 
-function actionWhenHoveringClass(className, action) {
+function actionWhenHoveringClass(action, className) {
 	var element = document.getElementsByClassName(className)[0];
 	element.addEventListener("mouseover", action);
 }
@@ -21,8 +25,17 @@ function actionWhenHoveringClass(className, action) {
 function insertTableInPopup() {
 	console.log("Hovered");
 	var element = document.getElementsByClassName("accountBlock topLeft")[0];
-	console.log(element);
+	console.log(popupIsLoaded());
+	waitUntilPopupIsLoaded();
+	checkIfLoadedAlready();
+}
 
+function waitUntilPopupIsLoaded() {
+	if(!popupIsLoaded()) {
+       window.setTimeout(waitUntilPopupIsLoaded, 200);
+    } else {
+      console.log("Popup loaded. ");
+    }
 }
 
 function popupIsLoaded() {
