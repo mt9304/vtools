@@ -1,9 +1,11 @@
 //checkIfLoadedAlready();
 addClassToAccountLink();
 actionWhenHoveringClass(insertTableAfterPopupLoads, "ta-hover-load");
-console.log(currentAccountLink());
+//console.log(currentAccountLink());
 
+/** *********************************** **/
 /** START: Setting Up And Checking Page **/
+/** *********************************** **/
 function addClassToAccountLink() {
     var element = document.getElementById("cas4_ileinner");
     element.classList.add("ta-hover-load");
@@ -36,7 +38,7 @@ function popupIsLoaded() {
 	return popupLoaded;
 }
 
-function customTableElement() {
+function getCustomTableElement() {
 		var custTable = document.createElement("table");
 	 		custTable.className += " list";
 
@@ -96,18 +98,52 @@ function insertTable() {
 		var referenceNode = document.getElementsByClassName("accountBlock topLeft")[0];
 		var lastOriginalTable = referenceNode.getElementsByClassName("pbBody")[0].getElementsByClassName("detailList")[0];
 
-		var customTable = customTableElement();
+		var customTable = getCustomTableElement();
 		lastOriginalTable.parentNode.insertBefore(customTable, lastOriginalTable.nextSibling);
 
-		
+		//Need the value after the forward slash, since it is used for various pages related to the account. 
+		console.log(getRowData(currentAccountLink().split(".com/")[1]));
 	}
 }
+/** ********************************** **/
 /** END: Setting Up And Checking Page  **/
+/** ********************************** **/
 
+/** *************************************** **/
 /** START: Getting Links And Data With AJAX **/
+/** *************************************** **/
 
 function currentAccountLink() {
 	return document.getElementById("cas4_ileinner").getElementsByTagName("a")[0].href;
 }
 
+function getRowData(accountURL) {
+	var fullURL = "https://visier.my.salesforce.com/500?rlid=RelatedCaseList&id=" + accountURL;
+	getHTML( fullURL, function (response) {
+		var accountName = response.getElementsByClassName("listRelatedObject caseBlock")[0];
+		console.log(accountName);
+		return accountName;
+	});
+
+}
+
+//Gets the HTML document of a page
+var getHTML = function ( url, callback ) {
+	// Feature detection
+	if ( !window.XMLHttpRequest ) return;
+	// Create new request
+	var xhr = new XMLHttpRequest();
+	// Setup callback
+	xhr.onload = function() {
+		if ( callback && typeof( callback ) === 'function' ) {
+			callback( this.responseXML );
+		}
+	}
+	//Get the HTML document for the customer page.
+	xhr.open( 'GET', url );
+	xhr.responseType = 'document';
+	xhr.send();
+};
+/** ************************************** **/
 /** END: Getting Links And Data With AJAX  **/
+/** ************************************** **/
