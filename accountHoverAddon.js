@@ -44,7 +44,7 @@ function getCustomTableElement() {
 		var custTableBody = document.createElement("tbody");
 
 		var custHeaderRow = document.createElement("tr");
-	 		custHeaderRow.className += " headerRow";
+	 		custHeaderRow.className += " headerRow ta-cust-header-row";
 
 		var custTableHeader1 = document.createElement("th");
 		 	custTableHeader1.className += " zen-deemphasize";
@@ -60,29 +60,25 @@ function getCustomTableElement() {
 
 		var custTableHeader4 = document.createElement("th");
 		 	custTableHeader4.className += " zen-deemphasize";
-		 	custTableHeader4.textContent = "Status";
+		 	custTableHeader4.textContent = "Date";
 
 		var custTableHeader5 = document.createElement("th");
 		 	custTableHeader5.className += " zen-deemphasize";
-		 	custTableHeader5.textContent = "Owner";
+		 	custTableHeader5.textContent = "Status";
 
-		var custBodyRow = document.createElement("tr");
-	 		custBodyRow.className += " dataRow";
-		var custBodyCell = document.createElement("td");
-	 		custBodyCell.className += " dataCell";
+		var custTableHeader6 = document.createElement("th");
+		 	custTableHeader6.className += " zen-deemphasize";
+		 	custTableHeader6.textContent = "Owner";
 
-		custBodyRow.appendChild(custBodyCell);
-
-		//Insert td elements for cell.
-
-		custHeaderRow.appendChild(custTableHeader1);
-		custHeaderRow.appendChild(custTableHeader2);
+		//Insert td elements for cell. Uncomment below for more columns. Also uncomment sections in insertDataCellsFromDocument(doc). 
+		//custHeaderRow.appendChild(custTableHeader1); //Ticket
+		//custHeaderRow.appendChild(custTableHeader2); //Contact Name
 		custHeaderRow.appendChild(custTableHeader3);
 		custHeaderRow.appendChild(custTableHeader4);
 		custHeaderRow.appendChild(custTableHeader5);
+		custHeaderRow.appendChild(custTableHeader6);
 
 		custTableBody.appendChild(custHeaderRow);
-		custTableBody.appendChild(custBodyRow);
 		custTable.appendChild(custTableBody);
 
 		return custTable;
@@ -101,8 +97,9 @@ function insertTable() {
 		lastOriginalTable.parentNode.insertBefore(customTable, lastOriginalTable.nextSibling);
 
 		//Need the value after the forward slash, since it is used for various pages related to the account. 
-		var obj = getRowData(currentAccountLink().split(".com/")[1]);
-		console.log(obj.ticketUrl1);
+		accountURL = currentAccountLink().split(".com/")[1];
+		getDocAndInsertData(accountURL);
+		
 	}
 }
 /** ********************************** **/
@@ -113,26 +110,72 @@ function insertTable() {
 /** START: Getting Links And Data With AJAX **/
 /** *************************************** **/
 
+var accountTicketDocument;
+
+function insertDataCellsFromDocument(doc) {
+	var row0 = doc.getElementsByClassName("pbBody")[0].getElementsByClassName("dataRow")[0];
+	var row1 = doc.getElementsByClassName("pbBody")[0].getElementsByClassName("dataRow")[1];
+	var row2 = doc.getElementsByClassName("pbBody")[0].getElementsByClassName("dataRow")[2];
+	var row3 = doc.getElementsByClassName("pbBody")[0].getElementsByClassName("dataRow")[3];
+	var row4 = doc.getElementsByClassName("pbBody")[0].getElementsByClassName("dataRow")[4];
+	var row5 = doc.getElementsByClassName("pbBody")[0].getElementsByClassName("dataRow")[5];
+	var row6 = doc.getElementsByClassName("pbBody")[0].getElementsByClassName("dataRow")[6];
+	var row7 = doc.getElementsByClassName("pbBody")[0].getElementsByClassName("dataRow")[7];
+
+	var row0tr = document.createElement("tr");
+		row0tr.className += " dataRow";
+ 		var row0SupportTicket = document.createElement("td");
+ 			row0SupportTicket.className += " dataCell";
+ 			row0SupportTicket.innerHTML = row0.getElementsByTagName("th")[0].innerHTML;
+ 		var row0ContactName = document.createElement("td");
+			row0ContactName.className += " dataCell";
+			row0ContactName.innerHTML = row0.getElementsByTagName("td")[3].innerHTML;
+ 		var row0Subject = document.createElement("td");
+ 			row0Subject.className += " dataCell";
+ 			row0Subject.innerHTML = row0.getElementsByTagName("td")[4].innerHTML;
+ 		var row0Date = document.createElement("td");
+ 			row0Date.className += " dataCell";
+ 			row0Date.textContent = row0.getElementsByTagName("td")[6].textContent;
+ 		var row0Status = document.createElement("td");
+ 			row0Status.className += " dataCell";
+ 			row0Status.textContent = row0.getElementsByTagName("td")[7].textContent;
+ 		var row0Owner = document.createElement("td");
+ 			row0Owner.className += " dataCell";
+ 			row0Owner.innerHTML = row0.getElementsByTagName("td")[8].innerHTML;
+ 		
+ 	//Uncomment below to add more columns. 
+	//row0tr.appendChild(row0SupportTicket);
+	//row0tr.appendChild(row0ContactName);
+	row0tr.appendChild(row0Subject);
+	row0tr.appendChild(row0Date);
+	row0tr.appendChild(row0Status);
+	row0tr.appendChild(row0Owner);
+
+	var custTableNode = document.getElementsByClassName("ta-cust-header-row")[0];
+	var customTable = getCustomTableElement();
+	custTableNode.parentNode.insertBefore(row0tr, custTableNode.nextSibling);
+}
+
 function currentAccountLink() {
 	return document.getElementById("cas4_ileinner").getElementsByTagName("a")[0].href;
 }
 
-function getRowData(accountURL) {
+function getDocAndInsertData(accountURL) {
 	var fullURL = "https://visier.my.salesforce.com/500?rlid=RelatedCaseList&id=" + accountURL;
-	var ticketTableElement = getHTML( fullURL, function (response) {
-		//Stores top 8 tickets. By default, the table is sorted by most recent at the top and oldest at the bototm. 
-		rowData["ticketUrl"+"2"] = "hello2";
-		var ticketTable = response.getElementsByClassName("listRelatedObject caseBlock")[0];
+
+	getHTML( fullURL, function (response) {
+		//console.log(response.getElementsByClassName("listRelatedObject caseBlock")[0]);
+		accountTicketDocument = response.getElementsByClassName("listRelatedObject caseBlock")[0];
+		insertDataCellsFromDocument(accountTicketDocument);
 	});
+
+	console.log(accountTicketDocument);
 
 	var rowData = {
 		ticketUrl1: "ticketurl 1", 
 		supportTicket: "0561561"
 	}
-
-	console.log(ticketTableElement);
-	console.log(rowData.ticketUrl1);
-	console.log(rowData.ticketUrl2);
+	//console.log(ticketTableElement.toString());
 	return rowData;
 }
 
@@ -140,9 +183,7 @@ function getRowData(accountURL) {
 var getHTML = function ( url, callback ) {
 	// Feature detection
 	if ( !window.XMLHttpRequest ) return;
-	// Create new request
 	var xhr = new XMLHttpRequest();
-	// Setup callback
 	xhr.onload = function() {
 		if ( callback && typeof( callback ) === 'function' ) {
 			callback( this.responseXML );
