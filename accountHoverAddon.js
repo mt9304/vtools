@@ -1,4 +1,3 @@
-//checkIfLoadedAlready();
 addClassToAccountLink();
 actionWhenHoveringClass(insertTableAfterPopupLoads, "ta-hover-load");
 
@@ -113,42 +112,46 @@ function insertTable() {
 var accountTicketDocument;
 
 function insertDataCellsFromDocument(doc) {
-	for (var i = 7; i > 0; i--) {
-		var rowtr = document.createElement("tr");
-		rowtr.className += " dataRow";
-		var row = doc.getElementsByClassName("pbBody")[0].getElementsByClassName("dataRow")[i];
-		//Uncommend below 2 sections for more columns. 
-		/**
-		var rowSupportTicket = document.createElement("td");
-			rowSupportTicket.className += " dataCell";
-			rowSupportTicket.innerHTML = row.getElementsByTagName("th")[0].innerHTML;
-			rowtr.appendChild(rowSupportTicket);
-		**/
-		/**
-		var rowContactName = document.createElement("td");
-			rowContactName.className += " dataCell";
-			rowContactName.innerHTML = row.getElementsByTagName("td")[3].innerHTML;
-			rowtr.appendChild(rowContactName);
-		**/
-		var rowSubject = document.createElement("td");
-			rowSubject.className += " dataCell";
-			rowSubject.innerHTML = row.getElementsByTagName("td")[4].innerHTML;
-			rowtr.appendChild(rowSubject);
-		var rowDate = document.createElement("td");
-			rowDate.className += " dataCell";
-			rowDate.textContent = row.getElementsByTagName("td")[6].textContent;
-			rowtr.appendChild(rowDate);
-		var rowStatus = document.createElement("td");
-			rowStatus.className += " dataCell";
-			rowStatus.textContent = row.getElementsByTagName("td")[7].textContent;
-			rowtr.appendChild(rowStatus);
-		var rowOwner = document.createElement("td");
-			rowOwner.className += " dataCell";
-			rowOwner.innerHTML = row.getElementsByTagName("td")[8].innerHTML;
-			rowtr.appendChild(rowOwner);
+	for (var i = 7; i >= 0; i--) {
+		try {
+			var rowtr = document.createElement("tr");
+			rowtr.className += " dataRow";
+			var row = doc.getElementsByClassName("pbBody")[0].getElementsByClassName("dataRow")[i];
+			//Uncommend below 2 sections for more columns. 
+			/**
+			var rowSupportTicket = document.createElement("td");
+				rowSupportTicket.className += " dataCell";
+				rowSupportTicket.innerHTML = row.getElementsByTagName("th")[0].innerHTML;
+				rowtr.appendChild(rowSupportTicket);
+			**/
+			/**
+			var rowContactName = document.createElement("td");
+				rowContactName.className += " dataCell";
+				rowContactName.innerHTML = row.getElementsByTagName("td")[3].innerHTML;
+				rowtr.appendChild(rowContactName);
+			**/
+			var rowSubject = document.createElement("td");
+				rowSubject.className += " dataCell";
+				rowSubject.innerHTML = row.getElementsByTagName("td")[4].innerHTML;
+				rowtr.appendChild(rowSubject);
+			var rowDate = document.createElement("td");
+				rowDate.className += " dataCell";
+				rowDate.textContent = row.getElementsByTagName("td")[6].textContent;
+				rowtr.appendChild(rowDate);
+			var rowStatus = document.createElement("td");
+				rowStatus.className += " dataCell";
+				rowStatus.textContent = row.getElementsByTagName("td")[7].textContent;
+				rowtr.appendChild(rowStatus);
+			var rowOwner = document.createElement("td");
+				rowOwner.className += " dataCell";
+				rowOwner.innerHTML = row.getElementsByTagName("td")[8].innerHTML;
+				rowtr.appendChild(rowOwner);
 
-		var custTableNode = document.getElementsByClassName("ta-cust-header-row")[0];
-		custTableNode.parentNode.insertBefore(rowtr, custTableNode.nextSibling);
+			var custTableNode = document.getElementsByClassName("ta-cust-header-row")[0];
+			custTableNode.parentNode.insertBefore(rowtr, custTableNode.nextSibling);
+		} catch (err) {
+			console.log("Ticket does not exist. ");
+		}
 	}
 }
 
