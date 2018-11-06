@@ -113,47 +113,43 @@ function insertTable() {
 var accountTicketDocument;
 
 function insertDataCellsFromDocument(doc) {
-	var row0 = doc.getElementsByClassName("pbBody")[0].getElementsByClassName("dataRow")[0];
-	var row1 = doc.getElementsByClassName("pbBody")[0].getElementsByClassName("dataRow")[1];
-	var row2 = doc.getElementsByClassName("pbBody")[0].getElementsByClassName("dataRow")[2];
-	var row3 = doc.getElementsByClassName("pbBody")[0].getElementsByClassName("dataRow")[3];
-	var row4 = doc.getElementsByClassName("pbBody")[0].getElementsByClassName("dataRow")[4];
-	var row5 = doc.getElementsByClassName("pbBody")[0].getElementsByClassName("dataRow")[5];
-	var row6 = doc.getElementsByClassName("pbBody")[0].getElementsByClassName("dataRow")[6];
-	var row7 = doc.getElementsByClassName("pbBody")[0].getElementsByClassName("dataRow")[7];
+	for (var i = 7; i > 0; i--) {
+		var rowtr = document.createElement("tr");
+		rowtr.className += " dataRow";
+		var row = doc.getElementsByClassName("pbBody")[0].getElementsByClassName("dataRow")[i];
+		//Uncommend below 2 sections for more columns. 
+		/**
+		var rowSupportTicket = document.createElement("td");
+			rowSupportTicket.className += " dataCell";
+			rowSupportTicket.innerHTML = row.getElementsByTagName("th")[0].innerHTML;
+			rowtr.appendChild(rowSupportTicket);
+		**/
+		/**
+		var rowContactName = document.createElement("td");
+			rowContactName.className += " dataCell";
+			rowContactName.innerHTML = row.getElementsByTagName("td")[3].innerHTML;
+			rowtr.appendChild(rowContactName);
+		**/
+		var rowSubject = document.createElement("td");
+			rowSubject.className += " dataCell";
+			rowSubject.innerHTML = row.getElementsByTagName("td")[4].innerHTML;
+			rowtr.appendChild(rowSubject);
+		var rowDate = document.createElement("td");
+			rowDate.className += " dataCell";
+			rowDate.textContent = row.getElementsByTagName("td")[6].textContent;
+			rowtr.appendChild(rowDate);
+		var rowStatus = document.createElement("td");
+			rowStatus.className += " dataCell";
+			rowStatus.textContent = row.getElementsByTagName("td")[7].textContent;
+			rowtr.appendChild(rowStatus);
+		var rowOwner = document.createElement("td");
+			rowOwner.className += " dataCell";
+			rowOwner.innerHTML = row.getElementsByTagName("td")[8].innerHTML;
+			rowtr.appendChild(rowOwner);
 
-	var row0tr = document.createElement("tr");
-		row0tr.className += " dataRow";
- 		var row0SupportTicket = document.createElement("td");
- 			row0SupportTicket.className += " dataCell";
- 			row0SupportTicket.innerHTML = row0.getElementsByTagName("th")[0].innerHTML;
- 		var row0ContactName = document.createElement("td");
-			row0ContactName.className += " dataCell";
-			row0ContactName.innerHTML = row0.getElementsByTagName("td")[3].innerHTML;
- 		var row0Subject = document.createElement("td");
- 			row0Subject.className += " dataCell";
- 			row0Subject.innerHTML = row0.getElementsByTagName("td")[4].innerHTML;
- 		var row0Date = document.createElement("td");
- 			row0Date.className += " dataCell";
- 			row0Date.textContent = row0.getElementsByTagName("td")[6].textContent;
- 		var row0Status = document.createElement("td");
- 			row0Status.className += " dataCell";
- 			row0Status.textContent = row0.getElementsByTagName("td")[7].textContent;
- 		var row0Owner = document.createElement("td");
- 			row0Owner.className += " dataCell";
- 			row0Owner.innerHTML = row0.getElementsByTagName("td")[8].innerHTML;
- 		
- 	//Uncomment below to add more columns. 
-	//row0tr.appendChild(row0SupportTicket);
-	//row0tr.appendChild(row0ContactName);
-	row0tr.appendChild(row0Subject);
-	row0tr.appendChild(row0Date);
-	row0tr.appendChild(row0Status);
-	row0tr.appendChild(row0Owner);
-
-	var custTableNode = document.getElementsByClassName("ta-cust-header-row")[0];
-	var customTable = getCustomTableElement();
-	custTableNode.parentNode.insertBefore(row0tr, custTableNode.nextSibling);
+		var custTableNode = document.getElementsByClassName("ta-cust-header-row")[0];
+		custTableNode.parentNode.insertBefore(rowtr, custTableNode.nextSibling);
+	}
 }
 
 function currentAccountLink() {
