@@ -1,7 +1,6 @@
 //checkIfLoadedAlready();
 addClassToAccountLink();
 actionWhenHoveringClass(insertTableAfterPopupLoads, "ta-hover-load");
-//console.log(currentAccountLink());
 
 /** *********************************** **/
 /** START: Setting Up And Checking Page **/
@@ -102,7 +101,8 @@ function insertTable() {
 		lastOriginalTable.parentNode.insertBefore(customTable, lastOriginalTable.nextSibling);
 
 		//Need the value after the forward slash, since it is used for various pages related to the account. 
-		console.log(getRowData(currentAccountLink().split(".com/")[1]));
+		var obj = getRowData(currentAccountLink().split(".com/")[1]);
+		console.log(obj.ticketUrl1);
 	}
 }
 /** ********************************** **/
@@ -119,12 +119,21 @@ function currentAccountLink() {
 
 function getRowData(accountURL) {
 	var fullURL = "https://visier.my.salesforce.com/500?rlid=RelatedCaseList&id=" + accountURL;
-	getHTML( fullURL, function (response) {
-		var accountName = response.getElementsByClassName("listRelatedObject caseBlock")[0];
-		console.log(accountName);
-		return accountName;
+	var ticketTableElement = getHTML( fullURL, function (response) {
+		//Stores top 8 tickets. By default, the table is sorted by most recent at the top and oldest at the bototm. 
+		rowData["ticketUrl"+"2"] = "hello2";
+		var ticketTable = response.getElementsByClassName("listRelatedObject caseBlock")[0];
 	});
 
+	var rowData = {
+		ticketUrl1: "ticketurl 1", 
+		supportTicket: "0561561"
+	}
+
+	console.log(ticketTableElement);
+	console.log(rowData.ticketUrl1);
+	console.log(rowData.ticketUrl2);
+	return rowData;
 }
 
 //Gets the HTML document of a page
