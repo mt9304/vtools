@@ -150,7 +150,7 @@ function insertDataCellsFromDocument(doc) {
 			var custTableNode = document.getElementsByClassName("ta-cust-header-row")[0];
 			custTableNode.parentNode.insertBefore(rowtr, custTableNode.nextSibling);
 		} catch (err) {
-			console.log("Ticket does not exist. ");
+			//console.log("Ticket does not exist. ");
 		}
 	}
 }
@@ -168,7 +168,7 @@ function getDocAndInsertData(accountURL) {
 		insertDataCellsFromDocument(accountTicketDocument);
 	});
 
-	console.log(accountTicketDocument);
+	//console.log(accountTicketDocument);
 
 	var rowData = {
 		ticketUrl1: "ticketurl 1", 
