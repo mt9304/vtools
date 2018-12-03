@@ -9,9 +9,9 @@
 
 This Chrome addon was created to automate some of the steps needed for investigating a task. On the account page, it automatically builds a table and populates it with data related to the account (taken from another page). This eliminates a lot of repetitive actions that are performed on a daily basis. 
 - The original process required a user to: </br>
-   1) Click the case > 2) Click the account > 3) Scroll down to relevant cases section > 4) Click view all cases > 5) Click sort > 6) Investigate > 7) Go back to account > 8) Start working
+   (1) Click the case > 2) Click the account > 3) Scroll down to relevant cases section > 4) Click view all cases > 5) Click sort > 6) Investigate > 7) Go back to account > 8) Start working
 - This addon reduces the actions to the following: </br>
-   1) Click the case > 2) Hover the account > 3) Investigate > 4) Start work
+   (1) Click the case > 2) Hover the account > 3) Investigate > 4) Start work
 
 The addon only works on Google Chrome. 
 
