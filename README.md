@@ -41,7 +41,7 @@ The addon only works on Google Chrome.
 Note: The text content on these screenshots were modified. 
 
 - Before
-- ![Before](https://github.com/mt9304/vtools/blob/master/images/before1.png)
+ ![Before](https://github.com/mt9304/vtools/blob/master/images/before1.png)
 
 - After
-- ![After](https://github.com/mt9304/vtools/blob/master/images/after1.png)
+ ![After](https://github.com/mt9304/vtools/blob/master/images/after1.png)
